@@ -1,17 +1,11 @@
 import { browser } from "$app/environment";
-import {writable} from "svelte/store";
-/** @type {import("svelte/store").Readable<PointerEvent> & {bindToPointermove: (event: PointerEvent) => void} } */
+import {readable} from "svelte/store";
+
+/** @type {import("svelte/store").Readable<PointerEvent>} */
 export let pointerMove
 
 if (browser) {
-  const {subscribe, set} = writable(new PointerEvent('pointermove'))
-
-  pointerMove = { 
-    subscribe,
-
-    bindToPointermove(event) {
-      if (!document.pointerLockElement) return
-      set(event)
-    },
-  }
+  pointerMove = readable(new PointerEvent('pointermove'),
+    (set) => window.addEventListener('pointermove', set)
+  )
 }

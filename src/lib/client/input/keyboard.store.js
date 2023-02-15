@@ -1,3 +1,4 @@
+import { browser } from "$app/environment";
 import {writable} from "svelte/store";
 
 /** @type Set<string> */
@@ -23,4 +24,9 @@ export const keyboard = {
       return val
     })
   }
+}
+
+if (browser) {
+  window.addEventListener('keydown', keyboard.bindToKeydown)
+  window.addEventListener('keyup',   keyboard.bindToKeyup)
 }

@@ -2,3 +2,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+	height: 100vh;
+}
+
+canvas {
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: black;
+	z-index: -1;
+}
+
+canvas:focus {
+	outline-width: 0;
+}

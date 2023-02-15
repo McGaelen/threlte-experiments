@@ -1,19 +1,31 @@
 <script>
-  import Main from "$lib/client/components/Main.svelte";
-	import { keyboard } from "$lib/client/input/keyboard.store";
-	import { pointerMove } from "$lib/client/input/pointermove.store";
-  import { Canvas, useThrelte } from "@threlte/core";
-  import {HTML} from '@threlte/extras'
+	import SpectatorCamera from "$lib/client/components/SpectatorCamera.svelte";
+  import Cube from "$lib/client/components/Cube.svelte";
+	import { useThrelte, T } from "@threlte/core";
 	import { onMount } from "svelte";
+	import Plane from "$lib/client/components/Plane.svelte";
+	import Player from "$lib/client/components/Player.svelte";
+	import Light from "$lib/client/components/Light.svelte";
 
   const {renderer} = useThrelte()
 
+  onMount(() => {
+    const canvas = renderer?.domElement
+    if (!canvas) {
+      console.error('No canvas!')
+      return
+    }
+
+    // WARNING: For some reason, cannot pass reference to `canvas.requestPointerLock`.
+    // Must actually call the function here. No idea why! So don't change this!
+		document.addEventListener('click', () => canvas.requestPointerLock())
+  })
 </script>
 
+<!-- <SpectatorCamera /> -->
 
-<Main>
-  <HTML transform>
-    <h3>hello!</h3>
-    <button class='border-2 border-red-500 hover:bg-red-500 hover:text-white'>Click me</button>
-  </HTML>
-</Main>
+<Light />
+
+<Player />
+<Cube />
+<Plane />
